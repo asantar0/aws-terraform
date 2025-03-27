@@ -36,20 +36,13 @@ Provide step-by-step instructions to install and set up your project.
 ```sh
 
 # Clone the repository
-
-git clone https://github.com/asantar0/aws-terraform.git
-
-
+$ git clone https://github.com/asantar0/aws-terraform.git
 
 # Navigate to the project directory
-
-cd aws-terraform/scenario-1
-
-
+$ cd aws-terraform/scenario-1
 
 # Install dependencies
-
-terraform init
+$ terraform init
 
 ```
 
@@ -62,10 +55,8 @@ Explain how to use your project. Provide examples or code snippets where applica
 ```sh
 
 # Run the application
-
-terraform plan
-
-terraform apply
+$ terraform plan
+$ terraform apply
 
 ```
 
