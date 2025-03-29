@@ -41,7 +41,7 @@ resource "aws_route_table" "DMZ_routing-table" {
 resource "aws_subnet" "DMZ-Subnet-AIOServers" {
   vpc_id = aws_vpc.DMZ.id
   cidr_block = "10.254.254.0/24"
-  availability_zone = "us-east-1a"
+  availability_zone = var.availability_zone
 
   tags = {
     Name = "DMZ All in one Servers subnet"
@@ -58,7 +58,7 @@ resource "aws_route_table_association" "DMZ_AIOServers-to-DMZ_routing_table" {
 resource "aws_security_group" "DMZ_AIOServers-SecurityGroup" {
   name        = "AIOServers-SecurityGroup"
   description = "Allows 22, 80 and 443"
-  vpc_id      =aws_vpc.DMZ.id
+  vpc_id      = aws_vpc.DMZ.id
 
   ingress {
     description = "HTTPS Traffic"
@@ -114,10 +114,10 @@ resource "aws_eip" "DMZ-Server-EIP" {
 
 #Step 9 - Create an Ubuntu server 
 resource "aws_instance" "DMZ-Server-instance" {
-  ami               = "ami-084568db4383264d4"
-  instance_type     = "t2.micro"
-  availability_zone = "us-east-1a"
-  key_name          = "main-key"
+  ami               = var.ami_system
+  instance_type     = var.instance_type
+  availability_zone = var.availability_zone
+  key_name          = var.ssh_key
 
   network_interface {
     device_index         = 0 
