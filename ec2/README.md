@@ -39,7 +39,7 @@ Provide step-by-step instructions to install and set up your project.
 $ git clone https://github.com/asantar0/aws-terraform.git
 
 # Navigate to the project directory
-$ cd aws-terraform/Scenarios/1
+$ cd aws-terraform/ec2
 
 # Install dependencies
 $ terraform init
