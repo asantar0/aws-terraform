@@ -9,14 +9,15 @@ resource "aws_s3_bucket" "my-first-bucket" {
 }
 
 #Versioning status
-resource "aws_s3_bucket_versioning" "versioning-parameters" {
-  bucket = aws_s3_bucket.my-first-bucket.id
+resource "aws_s3_bucket_versioning" "versioning_parameters" {
+  bucket = var.bucket
+
   versioning_configuration {
     status = "Enabled"
   }
 }
 
-#Encryption Options
+#Encryption options
 resource "aws_s3_bucket_server_side_encryption_configuration" "encryption_config" {
   bucket = var.bucket
 
@@ -27,7 +28,8 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "encryption_config
   }
 }
 
-resource "aws_s3_bucket_lifecycle_configuration" "s35" {
+#Lifecycle config
+resource "aws_s3_bucket_lifecycle_configuration" "lifecycle_config" {
   count  = var.lifecycle_enabled ? 1 : 0
   bucket = var.bucket
   rule {
@@ -49,3 +51,16 @@ resource "aws_s3_bucket_lifecycle_configuration" "s35" {
   }
 }
 
+
+#Upload a file
+resource "aws_s3_object" "file_upload" {
+  depends_on    = [aws_s3_bucket_versioning.versioning_parameters]
+  bucket        = var.bucket
+ 
+  #Folder "resources" contains files to be uploaded to s3
+  for_each      = fileset ("resources/", "**/*.*")
+ 
+  key           = each.value
+  source        = "resources/${each.value}"
+  content_type  = each.value
+}
