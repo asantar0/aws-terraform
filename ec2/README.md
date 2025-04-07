@@ -1,4 +1,4 @@
-# Scenario 1
+# EC2
 
 
 
